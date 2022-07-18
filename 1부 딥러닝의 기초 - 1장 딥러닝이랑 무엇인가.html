@@ -1,0 +1,670 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>1부 딥러닝의 기초 - 1장 딥러닝이랑 무엇인가 </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="c70ead79-36f7-44f1-a74a-47ac146a1024" class="page sans"><header><h1 class="page-title">1부 딥러닝의 기초 - 1장 딥러닝이랑 무엇인가 </h1><table class="properties"><tbody><tr class="property-row property-row-date"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesDate"><path d="M10.8889,5.5 L3.11111,5.5 L3.11111,7.05556 L10.8889,7.05556 L10.8889,5.5 Z M12.4444,1.05556 L11.6667,1.05556 L11.6667,0 L10.1111,0 L10.1111,1.05556 L3.88889,1.05556 L3.88889,0 L2.33333,0 L2.33333,1.05556 L1.55556,1.05556 C0.692222,1.05556 0.00777777,1.75556 0.00777777,2.61111 L0,12.5 C0,13.3556 0.692222,14 1.55556,14 L12.4444,14 C13.3,14 14,13.3556 14,12.5 L14,2.61111 C14,1.75556 13.3,1.05556 12.4444,1.05556 Z M12.4444,12.5 L1.55556,12.5 L1.55556,3.94444 L12.4444,3.94444 L12.4444,12.5 Z M8.55556,8.61111 L3.11111,8.61111 L3.11111,10.1667 L8.55556,10.1667 L8.55556,8.61111 Z"></path></svg></span>시작일</th><td><time>@2022년 7월 18일</time></td></tr><tr class="property-row property-row-url"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesUrl"><path d="M3.73333,3.86667 L7.46667,3.86667 C8.49613,3.86667 9.33333,4.70387 9.33333,5.73333 C9.33333,6.7628 8.49613,7.6 7.46667,7.6 L6.53333,7.6 C6.01813,7.6 5.6,8.0186 5.6,8.53333 C5.6,9.04807 6.01813,9.46667 6.53333,9.46667 L7.46667,9.46667 C9.5284,9.46667 11.2,7.79507 11.2,5.73333 C11.2,3.6716 9.5284,2 7.46667,2 L3.73333,2 C1.6716,2 0,3.6716 0,5.73333 C0,7.124 0.762067,8.33453 1.88953,8.97713 C1.87553,8.83107 1.86667,8.6836 1.86667,8.53333 C1.86667,7.92013 1.98753,7.33447 2.2036,6.7978 C1.99267,6.4954 1.86667,6.12953 1.86667,5.73333 C1.86667,4.70387 2.70387,3.86667 3.73333,3.86667 Z M12.1095,5.28907 C12.1231,5.4356 12.1333,5.58307 12.1333,5.73333 C12.1333,6.34607 12.0101,6.9294 11.7931,7.46513 C12.0059,7.768 12.1333,8.13573 12.1333,8.53333 C12.1333,9.5628 11.2961,10.4 10.2667,10.4 L6.53333,10.4 C5.50387,10.4 4.66667,9.5628 4.66667,8.53333 C4.66667,7.50387 5.50387,6.66667 6.53333,6.66667 L7.46667,6.66667 C7.98187,6.66667 8.4,6.24807 8.4,5.73333 C8.4,5.2186 7.98187,4.8 7.46667,4.8 L6.53333,4.8 C4.4716,4.8 2.8,6.4716 2.8,8.53333 C2.8,10.59507 4.4716,12.2667 6.53333,12.2667 L10.2667,12.2667 C12.3284,12.2667 14,10.59507 14,8.53333 C14,7.14267 13.2375,5.93167 12.1095,5.28907 Z"></path></svg></span>링크</th><td></td></tr><tr class="property-row property-row-date"><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.45);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesDate"><path d="M10.8889,5.5 L3.11111,5.5 L3.11111,7.05556 L10.8889,7.05556 L10.8889,5.5 Z M12.4444,1.05556 L11.6667,1.05556 L11.6667,0 L10.1111,0 L10.1111,1.05556 L3.88889,1.05556 L3.88889,0 L2.33333,0 L2.33333,1.05556 L1.55556,1.05556 C0.692222,1.05556 0.00777777,1.75556 0.00777777,2.61111 L0,12.5 C0,13.3556 0.692222,14 1.55556,14 L12.4444,14 C13.3,14 14,13.3556 14,12.5 L14,2.61111 C14,1.75556 13.3,1.05556 12.4444,1.05556 Z M12.4444,12.5 L1.55556,12.5 L1.55556,3.94444 L12.4444,3.94444 L12.4444,12.5 Z M8.55556,8.61111 L3.11111,8.61111 L3.11111,10.1667 L8.55556,10.1667 L8.55556,8.61111 Z"></path></svg></span>종료일</th><td><time>@2022년 7월 18일</time></td></tr></tbody></table></header><div class="page-body"><ul id="28d5bf93-27a4-4d2d-89c1-022211c482ce" class="toggle"><li><details open=""><summary>1장 딥러닝이란 무엇인가? </summary><ul id="a1b3a35e-37ab-4429-980e-8447e1d97bb5" class="toggle"><li><details open=""><summary>1.1 인공 지능과 머신 러닝, 딥러닝 </summary><ul id="91b046aa-972b-4544-825b-ae2e1387acc0" class="toggle"><li><details open=""><summary>1.1.1 인공 지능 </summary></details></li></ul><ul id="5cd6cc2f-5ff6-4abe-97ca-1d1c9db67e01" class="toggle"><li><details open=""><summary>1.1.2 머신 러닝 </summary></details></li></ul><ul id="79c1f6ff-5077-4186-bb8a-3dbc9d26a952" class="toggle"><li><details open=""><summary>1.1.3. 데이터에서 표현을 학습하기 </summary></details></li></ul><ul id="415837ee-2381-4d17-9923-ef103c9c44fb" class="toggle"><li><details open=""><summary>1.1.4 딥러닝에서 ‘딥’이란 무엇일까? </summary></details></li></ul><ul id="a79c7b31-1eda-426d-aab5-ad42d9c598fc" class="toggle"><li><details open=""><summary>1.1.5 그림 3개로 딥러닝의 작동 원리 이해하기 </summary><ul id="ecc91d3d-f8fc-4756-96cd-bdddc91e7140" class="bulleted-list"><li style="list-style-type:disc">입력과 타깃을 매핑(mapping)하여 학습 </li></ul><ul id="872d6ddc-593b-4f74-aee5-681f8c47afdf" class="bulleted-list"><li style="list-style-type:disc">가중치(weight)을 조정, 가중치를 파라미터로 가지는 함수로 표현됨 </li></ul><ul id="5b591dec-4d48-4bde-bcda-d98c000ec106" class="bulleted-list"><li style="list-style-type:disc">학습: 주어진 입력, 정확한 타깃에 매핑하기 위해 가중치 값을 찾는 것 </li></ul><ul id="97eb4173-c89b-4842-ac6f-f6373c5d05f8" class="bulleted-list"><li style="list-style-type:disc">출력 제어 - 신경망의 손실 함수(loss function) 또는 목적 함수(object function)</li></ul><ul id="b3843618-9abb-4385-b816-d4e16541427a" class="bulleted-list"><li style="list-style-type:disc">손실 점수가 감소되는 방향으로 가중치 값을 조금씨 수정함 </li></ul><ul id="0344d7bc-92c9-4a2d-a56d-a30bbc3176c4" class="bulleted-list"><li style="list-style-type:disc">수정 과정 : 역전파(Backpropagation)알고리즘을 구현한 옵티마이저(optimizer_가 담당함 <figure id="20152c41-bd3e-4b26-908f-9618e53f1043" class="image"><a href="https://velog.velcdn.com/images/minukiki/post/2834ebf0-2a38-4f69-b9b4-d0b8d935102d/image.png"><img src="https://velog.velcdn.com/images/minukiki/post/2834ebf0-2a38-4f69-b9b4-d0b8d935102d/image.png"/></a></figure></li></ul></details></li></ul><ul id="adb97808-b28b-4d87-9f6d-17f6fefd48c2" class="toggle"><li><details open=""><summary>1.1.6 지금까지 딥러닝의 성과 </summary></details></li></ul><ul id="f79faf41-babb-4c24-823a-3c1a13b22883" class="toggle"><li><details open=""><summary>1.1.7 단기간 과대 선전을 믿지 말자 </summary></details></li></ul><ul id="4348d67e-ac0b-4fcf-a3c3-43cd5e171e8b" class="toggle"><li><details open=""><summary>1.1.8 AI에 대한 전망 </summary></details></li></ul></details></li></ul><ul id="f0e97791-b623-4a59-ae7d-a48333a19519" class="toggle"><li><details open=""><summary>1.2 딥러닝 이전 </summary><ul id="1ac053b4-00d0-4d11-ad93-d06c7c058fc7" class="toggle"><li><details open=""><summary>1.2.1 확률적 모델링 </summary><ul id="86c84566-778e-4f30-8664-d96cc41493b8" class="toggle"><li><details open=""><summary>나이브 베이즈(Naive Bayes) 알고리즘 </summary><ul id="d6a895b3-f314-4809-861a-1f810c647256" class="bulleted-list"><li style="list-style-type:disc">입력 데이터의 특성이 모두 독립적이라고 가정하고 베이즈 정리를 적용하는 머신 러닝 분류 알고리즘</li></ul><ul id="043336d0-b030-4992-a5a1-c77f7b6f9254" class="bulleted-list"><li style="list-style-type:disc">밀접하게 연관된 모델이 로지스틱 회귀(logistic regression) </li></ul></details></li></ul></details></li></ul><ul id="30e6d50b-6708-4d8a-aff5-29ca9b2c3a1d" class="toggle"><li><details open=""><summary>1.2.2 초창기 신경망 </summary></details></li></ul><ul id="098b17e4-1f9d-4a67-97ed-78738d5113d9" class="toggle"><li><details open=""><summary>1.2.3 커널 방법 </summary><ul id="71ceba56-b193-42b5-87ba-95f6b75407a0" class="toggle"><li><details open=""><summary>커널 방법(Kernel method)</summary><ul id="4d8f0010-1895-49f6-bd6f-49719a4f3225" class="bulleted-list"><li style="list-style-type:disc">분류 알고리즘의 한 종류 </li></ul><ul id="5619fd53-ef9f-4cf3-b2ad-2369bc54209b" class="bulleted-list"><li style="list-style-type:disc">서포트 벡터 머신(Support Vector Machine, SVM) 이 대표적 <ul id="71a21d0b-a003-4b56-81cf-7ad4def45db9" class="bulleted-list"><li style="list-style-type:circle">2개의 다른 범주에 속한 데이터 포인트 그룹 사이 좋은 <code>결정 경계(decision boundary)</code>를 찾음 </li></ul><ul id="ae932b32-c183-44c6-887d-19e59a54f627" class="bulleted-list"><li style="list-style-type:circle">SVM이 결정 경계 찾는 과정<ul id="f91c363b-38e2-47aa-9bdd-a47ee745002b" class="bulleted-list"><li style="list-style-type:square">결정 경계가 하나의 <code>초평면(hyperplane)</code>으로 표현될 수 있도록 데이터 매핑</li></ul><ul id="23d84bc0-8f0d-4847-9cf0-64db475d4413" class="bulleted-list"><li style="list-style-type:square">데이터 포인트 사이의 거리가 최대가 되도록 <code>마진 최대화(maximizing the margin)</code> </li></ul></li></ul><ul id="9991e9a9-fdd6-47c9-8ba2-818872ca1a70" class="bulleted-list"><li style="list-style-type:circle">커널 기법(kernel trick)<ul id="56f254dc-b6b9-42ef-93f1-80df4c226443" class="bulleted-list"><li style="list-style-type:square">새롭게 표현된 공간에서 좋은 결정 초평면을 찾기 위해 새로운 공간에 대응하는 데이터 포인트의 좌표를 실제로 구할 필요가 없음 </li></ul><ul id="3828d3e4-a5f3-45e0-b2f0-05ff250ff9e3" class="bulleted-list"><li style="list-style-type:square">커널 함수(Kernel function) 사용하여 효율적으로 계산 </li></ul></li></ul></li></ul></details></li></ul><ul id="fff81f25-a61b-4d9c-8a87-bcea1adfacbc" class="toggle"><li><details open=""><summary></summary></details></li></ul></details></li></ul><ul id="10884454-a4fa-4e72-b686-aeebf4cb8cbc" class="toggle"><li><details open=""><summary>1.2.4 결정 트리, 랜덤 포레스트, 그래디언트 부스팅 머신 </summary><ul id="404dce9e-7aa2-4bc9-93f6-674a6f7378b2" class="toggle"><li><details open=""><summary>결정 트리 </summary></details></li></ul><ul id="7c94af55-e6cb-4fc1-80bf-9b77d8bbadd1" class="toggle"><li><details open=""><summary>랜덤 포레스트</summary><ul id="5b1e0e39-687e-4c44-97ac-96dc9ced87f2" class="bulleted-list"><li style="list-style-type:disc">결정 트리의 앙상블</li></ul></details></li></ul><ul id="8452541e-cd6d-41aa-ba1a-01a1ad970c17" class="toggle"><li><details open=""><summary>그래디언트 부스팅 머신 </summary><ul id="aef36a79-755a-45a3-b84c-0c42566f630f" class="bulleted-list"><li style="list-style-type:disc">약한 예측 모델인 결정 트리를 앙상블 (놓친 데이터 포인트를 보완하여 훈련)</li></ul></details></li></ul></details></li></ul><ul id="46cf7dc5-3b9d-499f-8b2c-69ddb8dad0ac" class="toggle"><li><details open=""><summary>1.2.5 다시 신경망으로 </summary></details></li></ul><ul id="e1d2cc89-8947-4908-892a-16090274c00b" class="toggle"><li><details open=""><summary>1.2.6 딥러닝의 특징 </summary><ul id="0bd4524b-6a39-4601-8869-60a4ab678e1e" class="bulleted-list"><li style="list-style-type:disc">머신 러닝: 특성 공학(feature engineering)을 통해 데이터의 좋은 표현을 수동으로 만들어야 함 </li></ul><ul id="af3a4247-cc5d-4dde-9367-710f1a76ac36" class="bulleted-list"><li style="list-style-type:disc">딥러닝은 특성을 직접 찾는 대신, 한 번에 모든 특성을 학습 </li></ul><ul id="e7d0ac0e-c225-4316-81c5-d466899ef8d4" class="bulleted-list"><li style="list-style-type:disc">엔드-투-엔드(end-to-end) 딥러닝 모델로 대체</li></ul><ul id="a29c3d51-805d-4839-a03f-ec51fec0856d" class="bulleted-list"><li style="list-style-type:disc">층을 거치면서 점진적으로 더 복잡한 표현이 만들어진다 : 이런 점진적인 중간 표현이 공동으로 학습된다  </li></ul></details></li></ul><ul id="5b613f6b-0657-4aa7-bcaa-c7be3b480ad5" class="toggle"><li><details open=""><summary>1.2.7 머신 러닝의 최근 동향 </summary></details></li></ul></details></li></ul><ul id="72bd50e9-6c03-4901-a2ff-ec112349601a" class="toggle"><li><details open=""><summary>1.3 왜 딥러닝일까? 왜 지금일까? </summary><ul id="82fbbaef-f488-4061-b8b6-1ce54741e262" class="toggle"><li><details open=""><summary>1.3.1 하드웨어 </summary><p id="5c767fa0-85ec-4216-ad91-084c89e029d4" class="">
+</p></details></li></ul><ul id="5cbd4018-0b31-42d6-9248-3a7913899a3c" class="toggle"><li><details open=""><summary>1.3.2 데이터 </summary></details></li></ul><ul id="c0ea4131-d24f-42d6-b928-2d54e83710a8" class="toggle"><li><details open=""><summary>1.3.3 알고리즘 </summary><ul id="51f1340b-d3f3-4100-9bb0-4e96bbf5210e" class="bulleted-list"><li style="list-style-type:disc">신경망 층에 더 잘 맞는 <code>활성화 함수(activation function)</code></li></ul><ul id="18fce6bb-8f05-41ec-8315-fc37b507936b" class="bulleted-list"><li style="list-style-type:disc">층별 사전 훈련(pretraining)을 불필요하게 만든 <code>가중치 초기화(weight initialization) 방법 </code></li></ul><ul id="8ec90d4e-3efc-4b8b-a015-e944810c63c5" class="bulleted-list"><li style="list-style-type:disc">RMSProp 과 Adam 과 같은 더 좋은 <code>최적화 방법 </code></li></ul></details></li></ul><ul id="b462a4eb-8724-43ff-a1a4-2ce4ed4dcf33" class="toggle"><li><details open=""><summary>1.3.4 새로운 투자의 바람 </summary></details></li></ul><ul id="055a0305-81c9-41fc-8222-aa8abb7a0d4e" class="toggle"><li><details open=""><summary>1.3.5 딥러닝의 대중화 </summary></details></li></ul><ul id="30b1a57b-1d4e-4cc6-b2cc-c49eb73af107" class="toggle"><li><details open=""><summary>1.3.6 지속될까? </summary><ul id="89e4fdd6-201b-4901-9e65-6b9121944c88" class="bulleted-list"><li style="list-style-type:disc">단순함 : 딥러닝 특성 공학이 필요하지 않아 복잡하고 불안정한 많은 엔지니어링 과정을 엔드-투-엔드로 훈련시킬 수 있는 모델로 바꾸저ㅜㅁ </li></ul><ul id="4e24abb9-a59f-4880-91c2-7bedb7361e34" class="bulleted-list"><li style="list-style-type:disc">확장성: 딥러닝 GPU/TPU에서 병렬화할 수 있음 </li></ul><ul id="d0059b5d-78be-4f6a-a301-a329d5d52586" class="bulleted-list"><li style="list-style-type:disc">다용도와 재사용성: 딥러닝 모델은 처움부터 다시 시작하지 않고 추가되는 데이터로도 훈련할 수 있음 `</li></ul></details></li></ul></details></li></ul></details></li></ul></div></article></body></html>
